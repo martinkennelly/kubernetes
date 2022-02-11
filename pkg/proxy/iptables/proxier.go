@@ -1095,7 +1095,7 @@ func (proxier *Proxier) syncProxyRules() {
 		if svcNameString == "openshift-dns/dns-default:dns" {
 			for _, ep := range allEndpoints {
 				if ep.GetIsLocal() {
-					klog.V(4).Infof("Found a local endpoint %q for service %q; preferring the local endpoint and ignoring %d other endpoints", ep.String(), svcNameString, len(allEndpoints) - 1)
+					klog.V(4).Infof("Found a local endpoint %q for service %q; preferring the local endpoint and ignoring %d other endpoints", ep.String(), svcNameString, len(allEndpoints)-1)
 					allEndpoints = []proxy.Endpoint{ep}
 					break
 				}
@@ -1433,7 +1433,7 @@ func (proxier *Proxier) syncProxyRules() {
 
 		// If "local-with-fallback" is in effect and there are no local endpoints,
 		// then NAT the traffic and forward to a remote endpoint
-		if numLocalEndpoints == 0 && svcInfo.localWithFallback {
+		/*if numLocalEndpoints == 0 && svcInfo.localWithFallback {
 			utilproxy.WriteLine(proxier.natRules,
 				"-A", string(svcXlbChain),
 				"-m", "comment", "--comment", `"local-with-fallback NAT"`,
@@ -1442,7 +1442,7 @@ func (proxier *Proxier) syncProxyRules() {
 
 			localEndpointChains = endpointChains
 			numLocalEndpoints = len(localEndpointChains)
-		}
+		} */
 
 		if numLocalEndpoints == 0 {
 			// Blackhole all traffic since there are no local endpoints
